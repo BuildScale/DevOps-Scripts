@@ -1,0 +1,21 @@
+[submodule "SQL"]
+	path = SQL
+	url = https://github.com/BuildScale/SQL-scripts
+[submodule "sql"]
+	path = sql
+	url = https://github.com/BuildScale/SQL-scripts
+[submodule "templates"]
+	path = templates
+	url = https://github.com/BuildScale/Templates
+[submodule "vagrant-configs"]
+	path = vagrant-configs
+	url = https://github.com/BuildScale/Vagrant-templates
+[submodule "packer"]
+	path = packer
+	url = https://github.com/BuildScale/Packer-templates
+[submodule "kubernetes-configs"]
+	path = kubernetes-configs
+	url = https://github.com/BuildScale/Kubernetes-configs
+[submodule "ansible"]
+	path = ansible
+	url = https://github.com/BuildScale/Ansible
