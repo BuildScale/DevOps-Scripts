@@ -2,7 +2,7 @@
 #  vim:ts=4:sts=4:sw=4:et
 #
 #  Author: KhulnaSoft, Ltd
-#  Date: 2020-08-24 00:05:26 +0100 (Mon, 24 Aug 2020)
+#  Date: 2019-02-15 21:31:10 +0000 (Fri, 15 Feb 2019)
 #
 #  https://github.com/BuildScale/DevOps-Scripts
 #
@@ -13,11 +13,7 @@
 #  https://www.linkedin.com/in/BuildScale
 #
 
-set -eu  #o pipefail  # not available in POSIX sh
-if [ "${SHELL##*/}" = bash ]; then
-    # shellcheck disable=SC2039
-    set -o pipefail
-fi
+set -eu
 [ -n "${DEBUG:-}" ] && set -x
 srcdir="$(dirname "$0")"
 
@@ -27,7 +23,7 @@ srcdir="$(dirname "$0")"
 # shellcheck disable=SC2154
 usage(){
     cat <<EOF
-Checks a given list of APK packages and returns those already installed
+Installs Alpine APK package lists if the packages aren't already installed
 
 $package_args_description
 
@@ -46,10 +42,7 @@ for arg; do
     esac
 done
 
-installed_packages="$(mktemp)"
-trap 'rm -f -- "$installed_packages"' EXIT
-
-installed_apk > "$installed_packages"
 
 process_package_args "$@" |
-grep -Fx -f "$installed_packages" || :  # grep causes pipefail exit code breakages in calling code when it doesn't match
+"$srcdir/apk_filter_not_installed.sh" |
+xargs -r "$srcdir/apk_install_packages.sh"
