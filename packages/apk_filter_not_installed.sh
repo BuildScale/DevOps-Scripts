@@ -27,7 +27,7 @@ srcdir="$(dirname "$0")"
 # shellcheck disable=SC2154
 usage(){
     cat <<EOF
-Checks a given list of APK packages and returns those already installed
+Checks a given list of APK packages and returns those not installed
 
 $package_args_description
 
@@ -52,4 +52,4 @@ trap 'rm -f -- "$installed_packages"' EXIT
 installed_apk > "$installed_packages"
 
 process_package_args "$@" |
-grep -Fx -f "$installed_packages" || :  # grep causes pipefail exit code breakages in calling code when it doesn't match
+grep -vFx -f "$installed_packages" || :  # grep causes pipefail exit code breakages in calling code when it doesn't match
